@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Codex V2.3 | Definitive + Gemini</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .page-content { display: none; }
-        .page-content.active { display: block; animation: fadeIn 0.2s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .nav-button.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; background: #1e293b; }
-        .sub-nav-button { font-size: 10px; padding: 6px 12px; border-radius: 4px; background: #1e293b; flex-shrink: 0; border: 1px solid #1e293b; }
-        .sub-nav-button.active { background: #38bdf8; color: #0b1120; font-weight: bold; border-color: #38bdf8; }
         .sub-content { display: none; margin-top: 15px; }
         .sub-content.active { display: block; }
         .entry-card { background: #0f172a; border: 1px solid #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4); }
