@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,7 +31,7 @@
         <div class="flex gap-2">
             <button onclick="copyAndGo('https://chatgpt.com')" class="bg-indigo-600 text-[9px] px-2 py-1 rounded font-bold text-white uppercase italic">GPT</button>
             <button onclick="copyAndGo('https://gemini.google.com')" class="bg-blue-500 text-[9px] px-2 py-1 rounded font-bold text-white uppercase italic">Gemini</button>
-            <button onclick="exportData()" class="bg-slate-700 text-[10px] px-2 py-1 rounded font-bold text-white">💾</button>
+            <button onclick="dataManager()" class="bg-slate-700 text-[10px] px-2 py-1 rounded font-bold text-white">💾 DATA</button>
         </div>
     </header>
 
@@ -57,6 +58,7 @@
         function init() {
             const nav = document.getElementById('main-nav');
             const container = document.getElementById('content-container');
+            nav.innerHTML = ''; container.innerHTML = '';
             
             SCHEMA.forEach((sec, idx) => {
                 nav.innerHTML += `<button onclick="openTab('${sec.id}')" id="btn-${sec.id}" class="nav-button ${idx===0?'active':''} px-4 py-3 text-[10px] font-bold uppercase flex-shrink-0">${sec.title}</button>`;
@@ -83,13 +85,11 @@
                 container.innerHTML += `
                     <div id="${sec.id}" class="page-content ${idx===0?'active':''}">
                         <h2 class="text-xl font-black text-white mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
-                        
                         <div class="mb-8 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
                             <p class="text-[9px] text-slate-500 uppercase font-bold mb-3 italic">🖼️ Ilustración General del Apartado</p>
                             <img id="main-img-${sec.id}" class="main-img">
                             <input type="file" accept="image/*" onchange="uploadMainImg(this, '${sec.id}')" class="text-[10px] text-slate-500">
                         </div>
-
                         ${subHtml}
                     </div>`;
             });
@@ -101,11 +101,8 @@
             document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.getElementById('btn-' + id).classList.add('active');
-            
             const section = SCHEMA.find(s => s.id === id);
-            if(section && section.subs.length > 0) {
-                openSub(id, 0);
-            }
+            if(section && section.subs.length > 0) openSub(id, 0);
         }
 
         function openSub(secId, subIdx) {
@@ -141,32 +138,31 @@
             const target = document.getElementById(`entries-${key}`);
             if(!target) return;
             target.innerHTML = '';
-            
             (db_entries[key] || []).forEach(entry => {
                 target.innerHTML += `
                     <div class="entry-card">
                         <img id="node-view-${entry.id}" src="${entry.img || ''}" class="node-img" style="display: ${entry.img ? 'block' : 'none'}">
-                        
                         <div class="flex justify-between items-center mb-4">
                             <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'title', this.value)" value="${entry.title}" placeholder="Nombre del Nodo..." class="bg-transparent text-lg font-bold text-white outline-none w-full border-b border-slate-800 focus:border-sky-500 pb-1 italic uppercase tracking-tighter">
                         </div>
-
                         <div class="flex gap-4 mb-4">
                             <label class="bg-slate-800 px-4 py-2 rounded text-[9px] font-bold cursor-pointer hover:bg-slate-700 transition flex-1 text-center">
-                                🖼️ IMAGEN NODO
-                                <input type="file" accept="image/*" onchange="uploadNodeImg(this, '${key}', ${entry.id})" class="hidden">
+                                🖼️ IMAGEN NODO <input type="file" accept="image/*" onchange="uploadNodeImg(this, '${key}', ${entry.id})" class="hidden">
                             </label>
                             <button onclick="deleteEntry('${key}', ${entry.id}, '${secId}', ${subIdx})" class="text-red-900 text-[9px] font-bold uppercase px-2">Borrar</button>
                         </div>
-
                         <textarea oninput="updateEntry('${key}', ${entry.id}, 'text', this.value)" class="min-h-[160px] mb-4" placeholder="Escribe el conocimiento aquí...">${entry.text}</textarea>
-                        
                         <div class="bg-black/30 p-2 rounded border border-slate-800">
                              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1 italic">Conexiones Mentales</p>
                              <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'links', this.value)" value="${entry.links}" placeholder="Ej: Arkan, Ciudad de Ω, Reliquia..." class="bg-transparent text-[10px] text-sky-400 outline-none w-full italic">
                         </div>
                     </div>`;
             });
+        }
+
+        function updateEntry(key, entryId, field, val) {
+            const entry = db_entries[key].find(e => e.id === entryId);
+            if(entry) { entry[field] = val; saveDB(); }
         }
 
         function uploadNodeImg(input, key, entryId) {
@@ -178,11 +174,6 @@
                 renderEntries(key.split('-')[0], parseInt(key.split('-')[1]));
             };
             reader.readAsDataURL(input.files[0]);
-        }
-
-        function updateEntry(key, entryId, field, val) {
-            const entry = db_entries[key].find(e => e.id === entryId);
-            if(entry) { entry[field] = val; saveDB(); }
         }
 
         function deleteEntry(key, entryId, secId, subIdx) {
@@ -200,7 +191,6 @@
             SCHEMA.forEach(sec => {
                 const mainImg = localStorage.getItem(PREFIX + 'mainimg_' + sec.id);
                 if(mainImg) { const el = document.getElementById('main-img-' + sec.id); el.src = mainImg; el.style.display = 'block'; }
-                
                 if(sec.id === 'inicio') {
                     const val = localStorage.getItem(PREFIX + 'raw_inicio');
                     if(val) document.getElementById('data-inicio').value = val;
@@ -208,12 +198,26 @@
             });
         }
 
-        function copyAndGo(url) {
-            const context = document.getElementById('data-inicio').value;
-            navigator.clipboard.writeText(context).then(() => {
-                alert("Contexto de INICIO copiado.");
-                window.open(url, "_blank");
-            });
+        function dataManager() {
+            const mode = confirm("ACEPTAR para CARGAR (Importar) / CANCELAR para GUARDAR (Descargar)");
+            if (mode) importData(); else exportData();
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file'; input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                reader.onload = re => {
+                    const content = JSON.parse(re.target.result);
+                    localStorage.clear();
+                    Object.keys(content.raw).forEach(k => localStorage.setItem(k, content.raw[k]));
+                    location.reload();
+                };
+            };
+            input.click();
         }
 
         function exportData() {
@@ -221,6 +225,11 @@
             const a = document.createElement('a');
             a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type: 'application/json'}));
             a.download = 'MASTER_CODEX_ULTIMATE.json'; a.click();
+        }
+
+        function copyAndGo(url) {
+            const context = document.getElementById('data-inicio').value;
+            navigator.clipboard.writeText(context).then(() => { alert("Copiado."); window.open(url, "_blank"); });
         }
 
         window.onload = init;
