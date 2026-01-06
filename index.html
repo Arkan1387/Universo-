@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Codex V2.3 | Definitive + Gemini</title>
+    <title> Bitácora de Canon V3.1 | Protocolo Ω Público</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -43,17 +42,30 @@
         const PREFIX = 'v11_';
         const SCHEMA = [
             { id: 'inicio', title: '🏠Inicio', subs: [] },
-            { id: 'mundo', title: '🌐Sistema de Mundo', subs: ['Jerarquias', 'Megaplaneta Ω', 'Leyes del Nyra y Alma', 'Habilidades Nyricas', 'Dimensiones', 'Planetas Eje', 'Sistemas', 'Reino Divino', 'Deseos'] },
+            { id: 'mundo', title: '🌐Sistema de Mundo', subs: ['Jerarquias', 'Megaplaneta Ω', 'Leyes del Nyra y Alma', 'Habilidades Nyricas', 'Dimensiones', 'Planetas Eje', 'Sistema', 'Reino Divino', 'Deseos'] },
+            { id: 'notas', title: '📘Notas', subs: ['Ideas', 'Borradores', 'Ideas Descartadas'] },
             { id: 'crono', title: '⌛Cronología', subs: ['Pasado', 'Hitos Actuales', 'Importantes'] },
-            { id: 'notas', title: '📘Notas', subs: ['Ideas', 'Lluvia de Ideas', 'Dudas'] },
-            { id: 'geo', title: '🗺️Geografía', subs: ['Mapas/Clima', 'Ciudades', 'Continentes'] },
+            { id: 'geo', title: '🗺️Geografía', subs: ['Territorio/Clima', 'Ciudades', 'Continentes'] },
             { id: 'caps', title: '📰Capítulos', subs: ['Estructura', 'Resúmenes', 'Progreso'] },
-            { id: 'escena', title: '📄Escena Actual', subs: ['Borrador', 'Diálogos', 'Revisiones'] },
             { id: 'arte', title: '⚔️Artefactos', subs: ['Mágicos', 'Tecnológicos', 'Divinos'] },
-            { id: 'bestia', title: '🐲Animales / Monstruos', subs: ['Depredadores', 'Domésticos', 'Míticos'] }
+            { id: 'gremio', title: '🏛️Gremios', subs: ['Aventureros', 'Mercenarios', 'Comerciantes', 'Artesanos/Herreros', 'Investigadores', 'Información', 'Exploradores', 'Asesinos'] },
+            { id: 'animal', title: '🐲Animales', subs: ['Criaturas Naturales', 'Bestias Corruptas', 'Monstruos', 'Bestias Magicas', 'Entidades Abismales', 'Bestias Legendarias'] }
         ];
 
-        let db_entries = JSON.parse(localStorage.getItem(PREFIX + 'entries')) || {};
+        // DATOS MAESTROS (TU UNIVERSO REAL)
+        const MASTER_DATA = {"mundo-0":[{"id":1767612440022,"title":"✨ Sistema de Jerarquías de Ω","text":"","links":"","img":""},{"id":1767612425146,"title":"⌛ RΩ: LA TRINIDAD PRIMORDIAL","text":"El Creador (Luz/Bien): Orden y estructura.\n\nEl Destructor (Oscuridad/Mal): Disolución y vacío necesario.\n\nEl Caos (Entropía): Motor de evolución.","links":"","img":""},{"id":1767612423382,"title":"🌌 RD: EL CONSEJO DIVINO (DIOSES)","text":"Autoridad máxima absoluta.","links":"","img":""},{"id":1767611597753,"title":"🔥 RE: EX-DIOSES REBELDES","text":"Antiguos miembros en oposición.","links":"","img":""},{"id":1767611589751,"title":"🪐 RT: SEMIDIOSES","text":"Autoridad sobre dominios específicos.","links":"","img":""},{"id":1767611589153,"title":"⚔️ RO: ÁNGELES Y VALQUIRIAS","text":"Intermediarios y ejecutores.","links":"","img":""},{"id":1767611588882,"title":"🌀 RA: ENTIDADES DEL CAOS","text":"Impredecibles. Sin escala fija.","links":"","img":""},{"id":1767611377302,"title":"👑 RC: LA CÚSPIDE (EL PRIMERO)","text":"El mejor espécimen de su raza.","links":"","img":""},{"id":1767611375623,"title":"👥 RM: LOS ELEGIDOS","text":"Humanos llevados a Ω.","links":"","img":""}]};
+
+        // LÓGICA DE LIMPIEZA DE BASURA:
+        let saved_entries = localStorage.getItem(PREFIX + 'entries');
+        let db_entries;
+
+        if (!saved_entries || saved_entries === "{}" || saved_entries === "null") {
+            // Si el usuario no tiene nada, forzamos los datos maestros
+            db_entries = MASTER_DATA;
+            localStorage.setItem(PREFIX + 'entries', JSON.stringify(db_entries));
+        } else {
+            db_entries = JSON.parse(saved_entries);
+        }
 
         function init() {
             const nav = document.getElementById('main-nav');
@@ -62,7 +74,6 @@
             
             SCHEMA.forEach((sec, idx) => {
                 nav.innerHTML += `<button onclick="openTab('${sec.id}')" id="btn-${sec.id}" class="nav-button ${idx===0?'active':''} px-4 py-3 text-[10px] font-bold uppercase flex-shrink-0">${sec.title}</button>`;
-
                 let subHtml = '';
                 if (sec.subs.length > 0) {
                     subHtml = `<div class="flex gap-2 mb-4 overflow-x-auto pb-2">`;
@@ -70,23 +81,20 @@
                         subHtml += `<button onclick="openSub('${sec.id}', ${sIdx})" id="sub-btn-${sec.id}-${sIdx}" class="sub-nav-button ${sIdx===0?'active':''}">${sub}</button>`;
                     });
                     subHtml += `</div>`;
-                    
                     sec.subs.forEach((sub, sIdx) => {
-                        subHtml += `
-                            <div id="sub-cont-${sec.id}-${sIdx}" class="sub-content ${sIdx===0?'active':''}">
+                        subHtml += `<div id="sub-cont-${sec.id}-${sIdx}" class="sub-content ${sIdx===0?'active':''}">
                                 <button onclick="addEntry('${sec.id}', ${sIdx})" class="w-full bg-sky-600/20 text-sky-400 text-[10px] py-3 rounded mb-6 font-bold border border-sky-600/30 uppercase tracking-widest">+ Agregar Nodo en ${sub}</button>
                                 <div id="entries-${sec.id}-${sIdx}"></div>
                             </div>`;
                     });
                 } else {
-                    subHtml = `<textarea id="data-${sec.id}" oninput="saveRaw('${sec.id}')" class="h-96" placeholder="Escribe aquí la premisa o el resumen general de tu universo..."></textarea>`;
+                    subHtml = `<textarea id="data-${sec.id}" oninput="saveRaw('${sec.id}')" class="h-96" placeholder="Resumen..."></textarea>`;
                 }
 
-                container.innerHTML += `
-                    <div id="${sec.id}" class="page-content ${idx===0?'active':''}">
+                container.innerHTML += `<div id="${sec.id}" class="page-content ${idx===0?'active':''}">
                         <h2 class="text-xl font-black text-white mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
                         <div class="mb-8 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
-                            <p class="text-[9px] text-slate-500 uppercase font-bold mb-3 italic">🖼️ Ilustración General del Apartado</p>
+                            <p class="text-[9px] text-slate-500 uppercase font-bold mb-3 italic">🖼️ Ilustración General</p>
                             <img id="main-img-${sec.id}" class="main-img">
                             <input type="file" accept="image/*" onchange="uploadMainImg(this, '${sec.id}')" class="text-[10px] text-slate-500">
                         </div>
@@ -94,6 +102,7 @@
                     </div>`;
             });
             loadAll();
+            openTab('mundo'); // Forzamos ir a donde están los datos inyectados
         }
 
         function openTab(id) {
@@ -108,28 +117,8 @@
         function openSub(secId, subIdx) {
             document.querySelectorAll(`#${secId} .sub-content`).forEach(c => c.classList.remove('active'));
             document.querySelectorAll(`#${secId} .sub-nav-button`).forEach(b => b.classList.remove('active'));
-            const content = document.getElementById(`sub-cont-${secId}-${subIdx}`);
-            const button = document.getElementById(`sub-btn-${secId}-${subIdx}`);
-            if(content) content.classList.add('active');
-            if(button) button.classList.add('active');
-            renderEntries(secId, subIdx);
-        }
-
-        function uploadMainImg(input, secId) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                localStorage.setItem(PREFIX + 'mainimg_' + secId, e.target.result);
-                const img = document.getElementById('main-img-' + secId);
-                img.src = e.target.result; img.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        function addEntry(secId, subIdx) {
-            const key = `${secId}-${subIdx}`;
-            if(!db_entries[key]) db_entries[key] = [];
-            db_entries[key].unshift({ id: Date.now(), title: '', text: '', links: '', img: '' });
-            saveDB();
+            document.getElementById(`sub-cont-${secId}-${subIdx}`).classList.add('active');
+            document.getElementById(`sub-btn-${secId}-${subIdx}`).classList.add('active');
             renderEntries(secId, subIdx);
         }
 
@@ -139,30 +128,19 @@
             if(!target) return;
             target.innerHTML = '';
             (db_entries[key] || []).forEach(entry => {
-                target.innerHTML += `
-                    <div class="entry-card">
+                target.innerHTML += `<div class="entry-card">
                         <img id="node-view-${entry.id}" src="${entry.img || ''}" class="node-img" style="display: ${entry.img ? 'block' : 'none'}">
-                        <div class="flex justify-between items-center mb-4">
-                            <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'title', this.value)" value="${entry.title}" placeholder="Nombre del Nodo..." class="bg-transparent text-lg font-bold text-white outline-none w-full border-b border-slate-800 focus:border-sky-500 pb-1 italic uppercase tracking-tighter">
-                        </div>
+                        <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'title', this.value)" value="${entry.title}" placeholder="Nombre..." class="bg-transparent text-lg font-bold text-white outline-none w-full border-b border-slate-800 mb-4 uppercase italic">
                         <div class="flex gap-4 mb-4">
-                            <label class="bg-slate-800 px-4 py-2 rounded text-[9px] font-bold cursor-pointer hover:bg-slate-700 transition flex-1 text-center">
-                                🖼️ IMAGEN NODO <input type="file" accept="image/*" onchange="uploadNodeImg(this, '${key}', ${entry.id})" class="hidden">
-                            </label>
+                            <label class="bg-slate-800 px-4 py-2 rounded text-[9px] font-bold cursor-pointer hover:bg-slate-700 flex-1 text-center">🖼️ IMAGEN NODO <input type="file" accept="image/*" onchange="uploadNodeImg(this, '${key}', ${entry.id})" class="hidden"></label>
                             <button onclick="deleteEntry('${key}', ${entry.id}, '${secId}', ${subIdx})" class="text-red-900 text-[9px] font-bold uppercase px-2">Borrar</button>
                         </div>
-                        <textarea oninput="updateEntry('${key}', ${entry.id}, 'text', this.value)" class="min-h-[160px] mb-4" placeholder="Escribe el conocimiento aquí...">${entry.text}</textarea>
+                        <textarea oninput="updateEntry('${key}', ${entry.id}, 'text', this.value)" class="min-h-[160px] mb-4">${entry.text}</textarea>
                         <div class="bg-black/30 p-2 rounded border border-slate-800">
-                             <p class="text-[8px] text-slate-500 uppercase font-bold mb-1 italic">Conexiones Mentales</p>
-                             <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'links', this.value)" value="${entry.links}" placeholder="Ej: Arkan, Ciudad de Ω, Reliquia..." class="bg-transparent text-[10px] text-sky-400 outline-none w-full italic">
+                             <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'links', this.value)" value="${entry.links || ''}" placeholder="Conexiones..." class="bg-transparent text-[10px] text-sky-400 outline-none w-full italic">
                         </div>
                     </div>`;
             });
-        }
-
-        function updateEntry(key, entryId, field, val) {
-            const entry = db_entries[key].find(e => e.id === entryId);
-            if(entry) { entry[field] = val; saveDB(); }
         }
 
         function uploadNodeImg(input, key, entryId) {
@@ -170,18 +148,28 @@
             reader.onload = e => {
                 const entry = db_entries[key].find(e => e.id === entryId);
                 entry.img = e.target.result;
-                saveDB();
-                renderEntries(key.split('-')[0], parseInt(key.split('-')[1]));
+                saveDB(); renderEntries(key.split('-')[0], parseInt(key.split('-')[1]));
             };
             reader.readAsDataURL(input.files[0]);
         }
 
+        function updateEntry(key, entryId, field, val) {
+            const entry = db_entries[key].find(e => e.id === entryId);
+            if(entry) { entry[field] = val; saveDB(); }
+        }
+
         function deleteEntry(key, entryId, secId, subIdx) {
-            if(confirm('¿Eliminar nodo?')) {
+            if(confirm('¿Eliminar?')) {
                 db_entries[key] = db_entries[key].filter(e => e.id !== entryId);
-                saveDB();
-                renderEntries(secId, subIdx);
+                saveDB(); renderEntries(secId, subIdx);
             }
+        }
+
+        function addEntry(secId, subIdx) {
+            const key = `${secId}-${subIdx}`;
+            if(!db_entries[key]) db_entries[key] = [];
+            db_entries[key].unshift({ id: Date.now(), title: '', text: '', links: '', img: '' });
+            saveDB(); renderEntries(secId, subIdx);
         }
 
         function saveRaw(id) { localStorage.setItem(PREFIX + 'raw_' + id, document.getElementById('data-' + id).value); }
@@ -191,25 +179,19 @@
             SCHEMA.forEach(sec => {
                 const mainImg = localStorage.getItem(PREFIX + 'mainimg_' + sec.id);
                 if(mainImg) { const el = document.getElementById('main-img-' + sec.id); el.src = mainImg; el.style.display = 'block'; }
-                if(sec.id === 'inicio') {
-                    const val = localStorage.getItem(PREFIX + 'raw_inicio');
-                    if(val) document.getElementById('data-inicio').value = val;
-                }
             });
         }
 
         function dataManager() {
-            const mode = confirm("ACEPTAR para CARGAR (Importar) / CANCELAR para GUARDAR (Descargar)");
+            const mode = confirm("ACEPTAR para CARGAR / CANCELAR para GUARDAR");
             if (mode) importData(); else exportData();
         }
 
         function importData() {
-            const input = document.createElement('input');
-            input.type = 'file'; input.accept = '.json';
+            const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
             input.onchange = e => {
-                const file = e.target.files[0];
                 const reader = new FileReader();
-                reader.readAsText(file, 'UTF-8');
+                reader.readAsText(e.target.files[0], 'UTF-8');
                 reader.onload = re => {
                     const content = JSON.parse(re.target.result);
                     localStorage.clear();
@@ -227,8 +209,18 @@
             a.download = 'MASTER_CODEX_ULTIMATE.json'; a.click();
         }
 
+        function uploadMainImg(input, secId) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                localStorage.setItem(PREFIX + 'mainimg_' + secId, e.target.result);
+                const img = document.getElementById('main-img-' + secId);
+                img.src = e.target.result; img.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
         function copyAndGo(url) {
-            const context = document.getElementById('data-inicio').value;
+            const context = document.getElementById('data-inicio') ? document.getElementById('data-inicio').value : "";
             navigator.clipboard.writeText(context).then(() => { alert("Copiado."); window.open(url, "_blank"); });
         }
 
