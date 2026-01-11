@@ -17,7 +17,6 @@
         .sub-content.active { display: block; }
         .entry-card { background: #0f172a; border: 1px solid #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4); }
         .node-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; border: 1px solid #334155; }
-        .main-img { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid #38bdf8; display: none; max-height: 300px; object-fit: cover; }
         textarea { background: #161e2e; border: 1px solid #1e293b; width: 100%; padding: 12px; border-radius: 8px; outline: none; font-size: 14px; color: #cbd5e1; line-height: 1.6; }
         textarea:focus { border-color: #38bdf8; }
         ::-webkit-scrollbar { display: none; }
@@ -26,7 +25,7 @@
 <body class="flex flex-col min-h-screen">
 
     <header class="bg-slate-900 p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 z-50">
-        <h1 class="font-black text-white uppercase text-xs tracking-widest italic">Protocolo Ω V2.3</h1>
+        <h1 class="font-black text-white uppercase text-xs tracking-widest italic">Protocolo Ω V3.1</h1>
         <div class="flex gap-2">
             <button onclick="copyAndGo('https://chatgpt.com')" class="bg-indigo-600 text-[9px] px-2 py-1 rounded font-bold text-white uppercase italic">GPT</button>
             <button onclick="copyAndGo('https://gemini.google.com')" class="bg-blue-500 text-[9px] px-2 py-1 rounded font-bold text-white uppercase italic">Gemini</button>
@@ -52,15 +51,14 @@
             { id: 'animal', title: '🐲Animales', subs: ['Criaturas Naturales', 'Bestias Corruptas', 'Monstruos', 'Bestias Magicas', 'Entidades Abismales', 'Bestias Legendarias'] }
         ];
 
-        // DATOS MAESTROS (TU UNIVERSO REAL)
-        const MASTER_DATA = {"mundo-0":[{"id":1767612440022,"title":"✨ Sistema de Jerarquías de Ω","text":"","links":"","img":""},{"id":1767612425146,"title":"⌛ RΩ: LA TRINIDAD PRIMORDIAL","text":"El Creador (Luz/Bien): Orden y estructura.\n\nEl Destructor (Oscuridad/Mal): Disolución y vacío necesario.\n\nEl Caos (Entropía): Motor de evolución.","links":"","img":""},{"id":1767612423382,"title":"🌌 RD: EL CONSEJO DIVINO (DIOSES)","text":"Autoridad máxima absoluta.","links":"","img":""},{"id":1767611597753,"title":"🔥 RE: EX-DIOSES REBELDES","text":"Antiguos miembros en oposición.","links":"","img":""},{"id":1767611589751,"title":"🪐 RT: SEMIDIOSES","text":"Autoridad sobre dominios específicos.","links":"","img":""},{"id":1767611589153,"title":"⚔️ RO: ÁNGELES Y VALQUIRIAS","text":"Intermediarios y ejecutores.","links":"","img":""},{"id":1767611588882,"title":"🌀 RA: ENTIDADES DEL CAOS","text":"Impredecibles. Sin escala fija.","links":"","img":""},{"id":1767611377302,"title":"👑 RC: LA CÚSPIDE (EL PRIMERO)","text":"El mejor espécimen de su raza.","links":"","img":""},{"id":1767611375623,"title":"👥 RM: LOS ELEGIDOS","text":"Humanos llevados a Ω.","links":"","img":""}]};
+        // DATOS MAESTROS INYECTADOS
+        const MASTER_DATA = {"mundo-0":[{"id":1767612440022,"title":"⌛ RΩ: LA TRINIDAD PRIMORDIAL","text":"El Creador (Luz/Bien): Representa el orden, la estructura y la creación de la materia. Es la fuerza que da propósito a las dimensiones.\n\nEl Destructor (Oscuridad/Mal): Representa el fin, la disolución y el vacío. No es \"malo\" por ética, sino por función; es el necesario contrapeso para que el sistema no colapse por sobrepoblación o estancamiento.\n\nEl Caos (Entropía): La fuerza impredecible que evita que el Bien y el Mal se anulen entre sí. Es el motor de la evolución, el cambio y lo inesperado. Es lo que permite que existan las anomalías.","links":"","img":""},{"id":1767612425146,"title":"📐 RA - LOS ARQUITECTOS","text":"Entidades gemelas que sirven a la Trinidad Primordial. Son la encarnación de la Creación y la Destrucción; ellos no manejan el Sistema, ellos son el Sistema.\n\nIdentidad: Representan la dualidad del Universo. Uno es el Arquitecto de la Luz (Creador) y el otro es el Arquitecto del Vacío (Destructor).\n\nEl Sistema del Creador (Estándar): Es el protocolo activo en Ω. Está optimizado para la estabilidad, el crecimiento controlado y la preservación de la vida del portador. Es el \"camino seguro\" para los Elegidos.\n\nEl Sistema del Destructor (Experimental): Una arquitectura latente y mucho más peligrosa. A diferencia de la versión del Creador, este sistema carece de filtros de seguridad.\n\nCapacidades Experimentales: El sistema del Destructor permite acceder a funciones \"prohibidas\": manipulación directa de la entropía, sobrecarga de Nyra sin límite de seguridad y alteraciones conceptuales que el sistema estándar bloquea por ser letales.\n\nCosto: Al ser una herramienta de experimentación y borrado, su uso desgasta la Persistencia del alma a una velocidad catastrófica. Es poder absoluto a cambio de una desintegración acelerada.","links":"","img":""},{"id":1767612423382,"title":"🌌 RD: EL CONSEJO DIVINO (DIOSES)","text":"Estatus: Nivel de autoridad máxima y absoluta.\n\nNaturaleza: Todos los miembros son del mismo rango jerárquico.","links":"","img":""},{"id":1767611597753,"title":"🔥 RE: EX-DIOSES REBELDES","text":"Poder: Conservan capacidades divinas, pero operan desde las sombras o en oposición al Consejo.\n\nNaturaleza: Antiguos miembros del Consejo que rompieron el orden.","links":"","img":""},{"id":1767611589751,"title":"🪐 RT: SEMIDIOSES (DIOSES MENORES)","text":"Naturaleza: Seres de menor grado que los Dioses Originales, pero con autoridad sobre dominios específicos.\n\nClasificación por Dominio: Su título y poder varían según la escala del territorio que controlan.","links":"","img":""},{"id":1767611589153,"title":"⚔️ RO: ÁNGELES Y VALQUIRIAS","text":"Naturaleza: Intermediarios y ejecutores del sistema.\n\nÁngeles: Depuración y corrección de errores técnicos/mágicos.\n\nValquirias: Recolección de almas y supervisión de los elegidos. Su poder y comportamiento varían según su tipo específico.","links":"","img":""},{"id":1767611588882,"title":"🌀 RA: ENTIDADES DEL CAOS","text":"Naturaleza: Impredecibles y variables.\n\nPropiedad: No encajan en ninguna escala de poder fija. Pueden estar al nivel de un Dios o ser una molestia menor, dependiendo de su esencia.","links":"","img":""},{"id":1767611377302,"title":"👑 RC: LA CÚSPIDE (EL PRIMERO)","text":"Estatus: El mejor espécimen de su raza\n\nNaturaleza: Representante de su especie en el Megaplaneta Ω.","links":"","img":""},{"id":1767611375623,"title":"👥 RM: LOS ELEGIDOS","text":"Naturaleza: Humanos comunes o destacados llevados a Ω.\n\nCondición: Solo estan en el universo Ω debido a que \"El Primero\" abrió el camino.\n\nEstatus: Pueden ser seres normales o extraordinarios dentro de su raza.","links":"","img":""}],"mundo-1":[{"id":1767679928502,"title":"🌎 Geometría y Escala","text":"Ω no es un planeta común; es el núcleo de un universo entero. Su superficie es millones de veces mayor que la de la Tierra, lo que genera una curvatura del horizonte casi imperceptible. Caminar hacia el \"este\" puede tomar siglos si no se usan Habilidades Nyricas o Artefactos.","links":"","img":""},{"id":1767679927886,"title":"⚖️ Gravedad y Presión","text":"La gravedad es 4 o 5 veces superior a la estándar (Basándose en el de la Tierra). Sin el refuerzo del Nyra, un humano promedio moriría por colapso pulmonar o rotura de órganos internos en minutos. El aire es más denso, lo que hace que los sonidos viajen más lejos y el esfuerzo físico sea extenuante.","links":"","img":""},{"id":1767679927171,"title":"🌩️ Fenómenos Meteorológicos","text":"El clima no sigue ciclos estacionales lógicos. Existen incluso \"Tormentas de Vacío\" que pueden desintegrar la materia y \"Lluvias de Nyra\" que recargan las habilidades pero pueden causar mutaciones si la exposición es prolongada. Existen muchos fenómenos en el planeta Ω>. El cielo cambia de color según la dimensión que esté más \"cerca\" en ese momento.","links":"","img":""},{"id":1767679297627,"title":"🌲 Ecosistemas de Adaptación","text":"La vegetación en Ω es competitiva y a menudo carnívora o parásita. Muchas plantas no fotosintetizan luz, sino que absorben Nyra del ambiente o de seres vivos. Los bosques pueden moverse o cambiar su topografía en cuestión de días.","links":"","img":""},{"id":1767679297155,"title":"🌋 Puntos de Convergencia","text":"Existen zonas donde el tejido de la realidad es delgado. En estos lugares, se pueden ver fragmentos de otras dimensiones (como restos de ciudades de la Tierra o paisajes de planetas eje desconocidos). Son zonas ricas en recursos pero patrulladas por Ángeles de Depuración.","links":"","img":""}],"mundo-2":[{"id":1768036193254,"title":"✨ Naturaleza y Flujo","text":"El Nyra es una sustancia metafísica cuantificable que actúa como el combustible para toda alteración de la realidad (Habilidades Nyricas).\n\nRegeneración: Se recupera lentamente mediante el descanso profundo o la absorción de núcleos energéticos.\n\nLímite Crítico: Cuando el Nyra llega a 0, el individuo entra en estado de \"Agotamiento Espiritual\", donde cualquier intento de usar poder activará el consumo de emergencia.","links":"","img":""},{"id":1768036192728,"title":"💎 El Alma","text":"El Alma no es energía, sino la esencia biológica y metafísica que sostiene la identidad y la vida del individuo.\n\nPropiedad Finita: A diferencia del Nyra, el Alma es un recurso estático que NO se regenera de forma natural.\n\nIntegridad: Se mide en un porcentaje de \"Persistencia\". Perder integridad implica perder partes de la esencia original (memorias, sentidos, rasgos de personalidad).","links":"","img":""},{"id":1768036192185,"title":"⚠️ Protocolo Vital","text":"Mecanismo automático del sistema que ocurre cuando un individuo intenta activar una habilidad sin tener reservas de Nyra.\n\nCosto Mecánico: El sistema comienza a \"lijar\" la estructura del Alma para extraer la potencia necesaria.\n\nDaño Irreversible: Cada segundo de uso bajo este protocolo desgasta y reduce permanentemente el Alma y la Persistencia.","links":"","img":""},{"id":1768036191647,"title":"☣️ Cicatrices y Parásitos","text":"Un alma con baja integridad presenta \"huecos\" en su tejido existencial.\n\nConsecuencias: Estos huecos atraen a las Entidades del Caos o parásitos de Nyra, que intentan ocupar el espacio vacío, provocando mutaciones aberrantes o la pérdida del libre albedrío.","links":"","img":""},{"id":1768036191173,"title":"🔗 Resonancia colectiva","text":"El alma del primer individuo transportado de cada dimensión sirve como el anclaje cuántico para su planeta de origen.\n\nUmbral Crítico: Si el alma del \"Primero\" cae por debajo del 10%, el canal dimensional se vuelve inestable, afectando la llegada y seguridad de los futuros Elegidos de esa misma dimensión.","links":"","img":""}],"mundo-3":[{"id":1768036827268,"title":"📜 Manifestación Nyrica","text":"La habilidad no nace de la práctica, sino de una revelación. Una vez que el individuo entra en contacto con la naturaleza interna del sistema se cristaliza en un poder único.\n\nIdentidad: El nombre otorgado define la raíz del poder. El usuario debe deducir sus funciones a través del uso, ya que no hay guías previas.\n\nVínculo Vital: La habilidad está anclada directamente a la esencia del portador.","links":"","img":""},{"id":1768036826789,"title":"🌿 Categorías de Poder","text":"Aunque cada habilidad es única, se manifiestan en tres variantes principales, estás son las más comunes:\n\nAlteración Interna: Modificaciones del propio cuerpo, sentidos o capacidades biológicas.\n\nProyección Externa: Creación o manipulación de elementos y energías fuera del cuerpo.\n\nInfluencia de Entorno: Alteración de las leyes físicas o lógicas en un área determinada","links":"","img":""},{"id":1768036826385,"title":"📌 El Identificador","text":"El nombre de la habilidad es la primera verdad dictada por el Sistema tras procesar al individuo.\n\nFunción: El portador solo recibe el nombre; el descubrimiento de sus funciones, límites y leyes de activación es un proceso de exploración personal.\n\nCanalización: El nombre actúa como la clave mental para estabilizar el flujo de Nyra durante los primeros usos de la habilidad.","links":"","img":""},{"id":1768036825975,"title":"✨ Forma pura","text":"Es la primera expresión física del poder, manifestándose como una pequeña emanación de energía directamente en la palma de la mano del portador.\n\nInterpretación: Esta forma ocurre de manera instintiva, incluso sin control previo, permitiendo al individuo observar la naturaleza de su energía (color, temperatura, densidad, etc) para deducir qué es su poder.\n\nUso Inicial: Sirve como una herramienta de diagnóstico para que el portador entienda la \"lógica\" de su habilidad antes de intentar proyectarla a mayor escala.","links":"","img":""},{"id":1768036825536,"title":"🔓 Apertura de Potencial","text":"La mayor parte del poder se encuentra bajo sellos para proteger el cuerpo mortal del portador.\n\nHitos: Los sellos se rompen tras superar situaciones de vida o muerte o demostrar un dominio de la forma actual.\n\nSub-capacidades: Las formas de aplicar la habilidad base depende del poder, esto hace que aumente su complejidad y potencia. Esto se divide en hechizos y subdivisiones que dependen de la imaginación, creatividad y su capacidad.","links":"","img":""},{"id":1768036825064,"title":"⛓️ Restricciones Existenciales","text":"Ninguna capacidad es infinita. El uso de la habilidad está sujeto a:\n\nSaturación: El cuerpo tiene un límite de cuánta energía puede canalizar antes de sufrir daños internos.\n\nCosto de Nyra: Cada activación consume una cantidad específica de energía. Si se agota, el poder empezará a devorar el soporte vital.\n\nAlcance: La efectividad disminuye drásticamente a medida que el efecto se aleja del portador.","links":"","img":""}],"mundo-4":[{"id":1768038059395,"title":"🌟 La Red de los Universos","text":"En la estructura del Rango Ω (Trinidad Primordial), la existencia no es un espacio infinito, sino un conjunto definido de burbujas de realidad llamadas Universos.\n\nCantidad: Existen exactamente Nueve Universos en total. Cada uno es independiente y posee su propio Consejo Divino (Rango 0) y sus propias Nueve Dimensiones internas.\n\nNaturaleza: Cada universo funciona como un ecosistema de almas. Siguen leyes de orden y equilibrio hasta que son marcados para el Protocolo Ω.\n\nEl Universo Ω (La Excepción): Es el \"Universo de Convergencia\". No es un universo natural, sino el resultado del colapso de las realidades de los otros universos. Es el único lugar donde la separación de las nueve dimensiones ha dejado de existir.","links":"","img":""},{"id":1768037927861,"title":"🌌 El Orden de los Universos","text":"En un universo estable, la realidad se divide en nueve dimensiones o capas de frecuencia. Estas capas mantienen la separación de niveles de Nyra y tipos de vida.\n\nFrecuencia: Las dimensiones bajas son materiales; las altas son puramente energéticas.\n\nLímite: Ningún ser puede existir en dos dimensiones simultáneamente sin un Nexo Divino que traduzca su existencia.","links":"","img":""},{"id":1768037923509,"title":"🌀 Gradiente de Realidad","text":"La naturaleza de una dimensión define las leyes físicas y la cantidad de Nyra que sus habitantes pueden soportar de forma natural.\n\nDensidad de Nyra: A medida que se asciende en el número dimensional, la energía es más pura, más inestable y más letal para seres de dimensiones inferiores.\n\nEstabilidad: Las dimensiones bajas (1-3) son materiales y rígidas; las dimensiones altas (7-9) son volátiles y moldeables por el pensamiento o la voluntad divina.","links":"","img":""},{"id":1768037921726,"title":"🌀 Dimensión Única: Universo Ω","text":"A diferencia de los universos comunes, el Universo Ω no posee capas. Aquí, las nueve dimensiones están colapsadas una sobre otra en un solo plano de existencia.\n\nDensidad Total: Este colapso es lo que genera la gravedad extrema y la volatilidad del Nyra en el Megaplaneta.\n\nConsecuencia: Al no haber separación, fuerzas que deberían estar aisladas (como el Caos y el Orden) chocan constantemente, creando un entorno de conflicto perpetuo.","links":"","img":""},{"id":1768037921199,"title":"☁️ El Umbral de Desgarro","text":"El espacio que separa las nueve dimensiones de un universo estándar del Universo Ω.\n\nNaturaleza: Es una zona de fricción absoluta donde el tiempo no fluye. Es el \"túnel\" por el que pasan los elegidos.\n\nRiesgo: Cruzar hacia el colapso de Ω requiere que el alma sea protegida por el Sistema, de lo contrario, la presión de las dimensiones colapsadas desintegra al individuo antes de aterrizar.","links":"","img":""},{"id":1768037916052,"title":"🫧 El Espacio Entre Capas","text":"El tejido que separa las nueve dimensiones no es un vacío absoluto, sino una zona de transición altamente peligrosa.\n\nFricción: Cruzar de una dimensión a otra sin tener el Sistema o la autorización del Consejo puede desintegrar el alma del viajero.\n\nManeras de cruzar: Se pueden cruzar universos y dimensiones sin necesidad de una autorización o el sistema, esto gracias a habilidades Nyricas o Artefactos algunas de estas sin poner en riesgo el alma.\n\nEntidades: Es el hábitat natural de ciertas Entidades del Caos que se alimentan de la energía residual que escapa de las dimensiones.","links":"","img":""}],"mundo-5":[{"id":1768102937851,"title":"🪐 El Ancla de la Dimensión","text":"Cada una de las nueve dimensiones de un Universo posee un único Planeta Eje. Este mundo actúa como el corazón de su dimensión; si el Planeta Eje muere o es consumido, la dimensión entera se desestabiliza y colapsa hacia el Vacío.\n\nFunción: Actúan como recolectores de la esencia vital de su dimensión. Son los mundos con mayor potencial de su respectivo plano.\n\nSincronía: La salud del Planeta Eje se refleja en el clima, Nyra del planeta y la estabilidad física de toda su dimensión.","links":"","img":""},{"id":1768102937304,"title":"📊 Clasificación dimensional","text":"No todos los Planetas Eje son iguales. Su poder y naturaleza dependen de la dimensión a la que pertenecen:\n\nEjes de Rango Inferior (1-3): Mundos mayoritariamente materiales (como la Tierra en la Dimensión 1). El Nyra es escaso y la tecnología o la fuerza física predominan.\n\nEjes de Rango Medio (4-6): Mundos donde la energía Nyrica es visible y forma parte del ecosistema. Las leyes físicas empiezan a ser moldeables.\n\nEjes de Rango Superior (7-9): Mundos de pura energía o conceptos. Sus habitantes son lo más cercano a los Semidioses.","links":"","img":""},{"id":1768102936862,"title":"⚠️ El Motor del Protocolo Ω","text":"Cuando un Universo entra en fase de colapso, el Sistema extrae el \"Núcleo de Nyra\" de los Planetas Eje para alimentar a una Bestia Primordial.\n\nConsecuencia: Al extraer el núcleo, el Planeta Eje se convierte en un \"Mundo Muerto\" o una cáscara vacía, condenando a los billones de habitantes.\n\nNúcleo de Nyra: El núcleo además de ser usado para eso también es usado por los Ex-Dioses Rebeldes para transportar seres al Universo Ω","links":"","img":""},{"id":1768102936390,"title":"🔗 El Recuerdo del Origen","text":"El Sistema implantado en los seres transportados al Universo Ω conservan la \"frecuencia\" de su Planeta de origen ya sean de su Planeta Eje o no.\n\nResonancia: Ciertas habilidades Nyricas funcionan mejor o tienen propiedades únicas si el entorno en Ω se parece vagamente a la atmósfera del Planeta original del portador.","links":"","img":""}],"mundo-6":[{"id":1768104509404,"title":"💀 El Sistema del destructor","text":"A diferencia de la versión estándar, este sistema no busca la preservación, sino el resultado absoluto a cualquier costo. Es una arquitectura de \"fuerza bruta\" divina.\n\nFunciones Prohibidas: Permite la manipulación de la entropía y el borrado de materia, saltándose todos los limitadores de seguridad física del portador.\n\nRiesgo de Colapso: No posee filtros de retorno. Cada vez que se usa una función experimental, el sistema consume directamente el Nyra del portador para procesar la energía.\n\nNaturaleza: Es un sistema diseñado para situaciones donde la destrucción del objetivo es más importante que la supervivencia.\n\nFallas: Este sistema tiene fallas y incluso el portador puede interactuar dentro del sistema y cambiarlo","links":"","img":""},{"id":1768103914209,"title":"🧠 Enlace Divino","text":"El Sistema es un constructo de leyes lógicas implantado en la conciencia del individuo. Actúa como el procesador central que traduce las energías incomprensibles en datos y capacidades manejables.\n\nFunción Primaria: Estabilizar el cuerpo del usuario para que no se desintegre ante la presión atmosférica y el Nyra ambiental del Megaplaneta.\n\nSincronización: El Sistema se fusiona con el alma, convirtiéndose en una parte inseparable de la existencia del portador.","links":"","img":""},{"id":1768103913814,"title":"👁️ La Lectura del Estado","text":"El Sistema otorga al usuario una \"visión interna\" que permite monitorizar su condición en tiempo real.\n\nIndicadores: Permite visualizar la reserva de Nyra (energía) y el porcentaje de Persistencia (integridad del alma).\n\nEscaneo de Amenazas: El Sistema puede identificar el Rango y el nivel de peligro de otras criaturas o individuos mediante el análisis de su rastro energético.","links":"","img":""},{"id":1768103913339,"title":"🔐 Limitadores de Flujo","text":"Para evitar que el usuario se destruya a sí mismo, el Sistema impone restricciones automáticas sobre el uso del Nyra.\n\nSellos de Potencia: Bloquea las funciones avanzadas de la Habilidad Nyrica hasta que el cuerpo y el alma alcancen la resistencia necesaria.\n\nBloqueo de Emergencia: El Sistema puede desactivar temporalmente las habilidades si detecta que la Persistencia del alma está cayendo a niveles críticos.","links":"","img":""},{"id":1768103912893,"title":"🛠️ Evolución del Soporte","text":"El Sistema no es estático; se adapta según los logros y la supervivencia del individuo.\n\nAsimilación: Tras derrotar enemigos o absorber núcleos de Nyra, el Sistema procesa la información para fortalecer los circuitos energéticos del usuario.\n\nDesbloqueo de Funciones: Permite el acceso a nuevas herramientas de la interfaz, como mapas del entorno, comunicación con otros portadores o registros de datos sobre Ω.","links":"","img":""},{"id":1768103912492,"title":"🧬 El Sistema","text":"El Sistema no es código inerte ni magia abstracta; es una entidad biológica y espiritual consciente que habita dentro del alma del ser al que se le otorgue el Sistema.\n\nInstinto de Evolución: Como todo ser vivo, el sistema busca fortalecerse. A menudo \"sugiere\" misiones o impulsa al portador a situaciones de peligro extremo para forzar una mutación (desbloqueo de sellos) que lo haga más poderoso.\n\nVoluntad Propia: En casos críticos, el sistema puede tomar decisiones autónomas para protegerse a sí mismo (que no siempre es proteger al portador), llegando a bloquear habilidades o forzar el cuerpo a actuar por puro instinto de supervivencia.","links":"","img":""}]};
 
-        // LÓGICA DE LIMPIEZA DE BASURA:
+        // LÓGICA DE INICIALIZACIÓN
         let saved_entries = localStorage.getItem(PREFIX + 'entries');
         let db_entries;
 
         if (!saved_entries || saved_entries === "{}" || saved_entries === "null") {
-            // Si el usuario no tiene nada, forzamos los datos maestros
             db_entries = MASTER_DATA;
             localStorage.setItem(PREFIX + 'entries', JSON.stringify(db_entries));
         } else {
@@ -74,6 +72,7 @@
             
             SCHEMA.forEach((sec, idx) => {
                 nav.innerHTML += `<button onclick="openTab('${sec.id}')" id="btn-${sec.id}" class="nav-button ${idx===0?'active':''} px-4 py-3 text-[10px] font-bold uppercase flex-shrink-0">${sec.title}</button>`;
+                
                 let subHtml = '';
                 if (sec.subs.length > 0) {
                     subHtml = `<div class="flex gap-2 mb-4 overflow-x-auto pb-2">`;
@@ -81,114 +80,118 @@
                         subHtml += `<button onclick="openSub('${sec.id}', ${sIdx})" id="sub-btn-${sec.id}-${sIdx}" class="sub-nav-button ${sIdx===0?'active':''}">${sub}</button>`;
                     });
                     subHtml += `</div>`;
-                    sec.subs.forEach((sub, sIdx) => {
-                        subHtml += `<div id="sub-cont-${sec.id}-${sIdx}" class="sub-content ${sIdx===0?'active':''}">
-                                <button onclick="addEntry('${sec.id}', ${sIdx})" class="w-full bg-sky-600/20 text-sky-400 text-[10px] py-3 rounded mb-6 font-bold border border-sky-600/30 uppercase tracking-widest">+ Agregar Nodo en ${sub}</button>
-                                <div id="entries-${sec.id}-${sIdx}"></div>
-                            </div>`;
-                    });
-                } else {
-                    subHtml = `<textarea id="data-${sec.id}" oninput="saveRaw('${sec.id}')" class="h-96" placeholder="Resumen..."></textarea>`;
                 }
 
-                container.innerHTML += `<div id="${sec.id}" class="page-content ${idx===0?'active':''}">
-                        <h2 class="text-xl font-black text-white mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
-                        <div class="mb-8 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
-                            <p class="text-[9px] text-slate-500 uppercase font-bold mb-3 italic">🖼️ Ilustración General</p>
-                            <img id="main-img-${sec.id}" class="main-img">
-                            <input type="file" accept="image/*" onchange="uploadMainImg(this, '${sec.id}')" class="text-[10px] text-slate-500">
-                        </div>
-                        ${subHtml}
-                    </div>`;
+                let contentHtml = `<div id="page-${sec.id}" class="page-content ${idx===0?'active':''}">`;
+                if(sec.id === 'inicio') {
+                    contentHtml += `<div class="mb-6"><h2 class="text-blue-400 font-bold mb-2 text-xs uppercase tracking-widest">Contexto Principal</h2><textarea id="data-inicio" rows="15" oninput="saveRaw('inicio')" placeholder="Escribe aquí el canon fundamental..."></textarea></div>`;
+                } else if (sec.subs.length > 0) {
+                    contentHtml += subHtml;
+                    sec.subs.forEach((sub, sIdx) => {
+                        contentHtml += `<div id="sub-content-${sec.id}-${sIdx}" class="sub-content ${sIdx===0?'active':''}">
+                            <div id="entries-${sec.id}-${sIdx}"></div>
+                            <button onclick="addNode('${sec.id}', ${sIdx})" class="w-full py-4 border-2 border-dashed border-slate-700 rounded-xl text-slate-500 font-bold text-xs hover:bg-slate-800 transition-all">+ AGREGAR NODO A ${sub.toUpperCase()}</button>
+                        </div>`;
+                    });
+                }
+                contentHtml += `</div>`;
+                container.innerHTML += contentHtml;
             });
-            loadAll();
-            openTab('mundo'); // Forzamos ir a donde están los datos inyectados
+            renderAll();
+            loadRaw();
         }
 
-        function openTab(id) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('btn-' + id).classList.add('active');
-            const section = SCHEMA.find(s => s.id === id);
-            if(section && section.subs.length > 0) openSub(id, 0);
-        }
-
-        function openSub(secId, subIdx) {
-            document.querySelectorAll(`#${secId} .sub-content`).forEach(c => c.classList.remove('active'));
-            document.querySelectorAll(`#${secId} .sub-nav-button`).forEach(b => b.classList.remove('active'));
-            document.getElementById(`sub-cont-${secId}-${subIdx}`).classList.add('active');
-            document.getElementById(`sub-btn-${secId}-${subIdx}`).classList.add('active');
-            renderEntries(secId, subIdx);
+        function renderAll() {
+            SCHEMA.forEach(sec => {
+                if(sec.subs.length > 0) {
+                    sec.subs.forEach((_, sIdx) => renderEntries(sec.id, sIdx));
+                }
+            });
         }
 
         function renderEntries(secId, subIdx) {
-            const key = `${secId}-${subIdx}`;
-            const target = document.getElementById(`entries-${key}`);
-            if(!target) return;
-            target.innerHTML = '';
-            (db_entries[key] || []).forEach(entry => {
-                target.innerHTML += `<div class="entry-card">
-                        <img id="node-view-${entry.id}" src="${entry.img || ''}" class="node-img" style="display: ${entry.img ? 'block' : 'none'}">
-                        <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'title', this.value)" value="${entry.title}" placeholder="Nombre..." class="bg-transparent text-lg font-bold text-white outline-none w-full border-b border-slate-800 mb-4 uppercase italic">
-                        <div class="flex gap-4 mb-4">
-                            <label class="bg-slate-800 px-4 py-2 rounded text-[9px] font-bold cursor-pointer hover:bg-slate-700 flex-1 text-center">🖼️ IMAGEN NODO <input type="file" accept="image/*" onchange="uploadNodeImg(this, '${key}', ${entry.id})" class="hidden"></label>
-                            <button onclick="deleteEntry('${key}', ${entry.id}, '${secId}', ${subIdx})" class="text-red-900 text-[9px] font-bold uppercase px-2">Borrar</button>
+            const listId = `${secId}-${subIdx}`;
+            const container = document.getElementById(`entries-${listId}`);
+            if(!container) return;
+            container.innerHTML = '';
+            const items = db_entries[listId] || [];
+            items.forEach((item, idx) => {
+                container.innerHTML += `
+                    <div class="entry-card">
+                        <div class="flex justify-between items-start mb-3">
+                            <input type="text" value="${item.title}" onchange="updateNode('${secId}', ${subIdx}, ${idx}, 'title', this.value)" class="bg-transparent font-black text-white uppercase text-sm tracking-wider w-full outline-none focus:text-blue-400">
+                            <button onclick="deleteNode('${secId}', ${subIdx}, ${idx})" class="text-slate-600 hover:text-red-500 ml-2">✕</button>
                         </div>
-                        <textarea oninput="updateEntry('${key}', ${entry.id}, 'text', this.value)" class="min-h-[160px] mb-4">${entry.text}</textarea>
-                        <div class="bg-black/30 p-2 rounded border border-slate-800">
-                             <input type="text" oninput="updateEntry('${key}', ${entry.id}, 'links', this.value)" value="${entry.links || ''}" placeholder="Conexiones..." class="bg-transparent text-[10px] text-sky-400 outline-none w-full italic">
+                        ${item.img ? `<img src="${item.img}" class="node-img">` : ''}
+                        <textarea rows="4" onchange="updateNode('${secId}', ${subIdx}, ${idx}, 'text', this.value)" placeholder="Descripción...">${item.text}</textarea>
+                        <div class="flex gap-2 mt-3">
+                            <input type="text" value="${item.links || ''}" onchange="updateNode('${secId}', ${subIdx}, ${idx}, 'links', this.value)" placeholder="Links (separados por coma)" class="bg-slate-800/50 border border-slate-700 p-2 rounded text-[10px] flex-1 outline-none">
+                            <label class="bg-slate-800 p-2 rounded cursor-pointer hover:bg-slate-700 transition-colors">
+                                📷 <input type="file" class="hidden" onchange="uploadNodeImg(this, '${secId}', ${subIdx}, ${idx})">
+                            </label>
                         </div>
                     </div>`;
             });
         }
 
-        function uploadNodeImg(input, key, entryId) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                const entry = db_entries[key].find(e => e.id === entryId);
-                entry.img = e.target.result;
-                saveDB(); renderEntries(key.split('-')[0], parseInt(key.split('-')[1]));
-            };
-            reader.readAsDataURL(input.files[0]);
+        function openTab(id) {
+            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.getElementById('btn-' + id).classList.add('active');
+            document.getElementById('page-' + id).classList.add('active');
         }
 
-        function updateEntry(key, entryId, field, val) {
-            const entry = db_entries[key].find(e => e.id === entryId);
-            if(entry) { entry[field] = val; saveDB(); }
+        function openSub(secId, subIdx) {
+            document.querySelectorAll(`#page-${secId} .sub-nav-button`).forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`#page-${secId} .sub-content`).forEach(c => c.classList.remove('active'));
+            document.getElementById(`sub-btn-${secId}-${subIdx}`).classList.add('active');
+            document.getElementById(`sub-content-${secId}-${subIdx}`).classList.add('active');
         }
 
-        function deleteEntry(key, entryId, secId, subIdx) {
-            if(confirm('¿Eliminar?')) {
-                db_entries[key] = db_entries[key].filter(e => e.id !== entryId);
+        function addNode(secId, subIdx) {
+            const key = `${secId}-${subIdx}`;
+            if(!db_entries[key]) db_entries[key] = [];
+            db_entries[key].push({ id: Date.now(), title: "NUEVO NODO", text: "", links: "", img: "" });
+            saveDB(); renderEntries(secId, subIdx);
+        }
+
+        function updateNode(secId, subIdx, nodeIdx, field, val) {
+            db_entries[`${secId}-${subIdx}`][nodeIdx][field] = val;
+            saveDB();
+        }
+
+        function deleteNode(secId, subIdx, nodeIdx) {
+            if(confirm("¿Eliminar este nodo?")) {
+                db_entries[`${secId}-${subIdx}`].splice(nodeIdx, 1);
                 saveDB(); renderEntries(secId, subIdx);
             }
         }
 
-        function addEntry(secId, subIdx) {
-            const key = `${secId}-${subIdx}`;
-            if(!db_entries[key]) db_entries[key] = [];
-            db_entries[key].unshift({ id: Date.now(), title: '', text: '', links: '', img: '' });
-            saveDB(); renderEntries(secId, subIdx);
+        function uploadNodeImg(input, secId, subIdx, nodeIdx) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                db_entries[`${secId}-${subIdx}`][nodeIdx].img = e.target.result;
+                saveDB(); renderEntries(secId, subIdx);
+            };
+            reader.readAsDataURL(input.files[0]);
         }
 
         function saveRaw(id) { localStorage.setItem(PREFIX + 'raw_' + id, document.getElementById('data-' + id).value); }
-        function saveDB() { localStorage.setItem(PREFIX + 'entries', JSON.stringify(db_entries)); }
-
-        function loadAll() {
-            SCHEMA.forEach(sec => {
-                const mainImg = localStorage.getItem(PREFIX + 'mainimg_' + sec.id);
-                if(mainImg) { const el = document.getElementById('main-img-' + sec.id); el.src = mainImg; el.style.display = 'block'; }
-            });
+        function loadRaw() {
+            const val = localStorage.getItem(PREFIX + 'raw_inicio');
+            if(val && document.getElementById('data-inicio')) document.getElementById('data-inicio').value = val;
         }
 
+        function saveDB() { localStorage.setItem(PREFIX + 'entries', JSON.stringify(db_entries)); }
+
         function dataManager() {
-            const mode = confirm("ACEPTAR para CARGAR / CANCELAR para GUARDAR");
+            const mode = confirm("ACEPTAR para CARGAR (Importar) / CANCELAR para GUARDAR (Descargar)");
             if (mode) importData(); else exportData();
         }
 
         function importData() {
-            const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+            const input = document.createElement('input');
+            input.type = 'file'; input.accept = '.json';
             input.onchange = e => {
                 const reader = new FileReader();
                 reader.readAsText(e.target.files[0], 'UTF-8');
@@ -207,16 +210,6 @@
             const a = document.createElement('a');
             a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type: 'application/json'}));
             a.download = 'MASTER_CODEX_ULTIMATE.json'; a.click();
-        }
-
-        function uploadMainImg(input, secId) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                localStorage.setItem(PREFIX + 'mainimg_' + secId, e.target.result);
-                const img = document.getElementById('main-img-' + secId);
-                img.src = e.target.result; img.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
         }
 
         function copyAndGo(url) {
